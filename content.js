@@ -9,7 +9,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         createSocket(msg.data)
     }
     else if (msg.action == 'join') {
-        ws = new WebSocket("wss://localhost:8080")
+        ws = new WebSocket("wss://amasync.tk:8080/")
         ws.onmessage = onmessage
         ws.onopen = () => ws.send("join " + msg.data[2]+" "+ msg.data[1])
         me.iAmhost = false
@@ -115,7 +115,7 @@ function onmessage(e) {
 function createSocket(nombre) {
 
     console.log('creatingsocket')
-    ws = new WebSocket("wss://localhost:8080")
+    ws = new WebSocket("wss://amasync.tk:8080/")
     ws.onmessage = onmessage
     ws.onopen = () => ws.send("create " + nombre+" "+document.querySelectorAll("video")[1].currentTime)
 
