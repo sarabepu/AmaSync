@@ -11,7 +11,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
     else if (msg.action == 'join') {
         ws = new WebSocket("wss://localhost:8080")
         ws.onmessage = onmessage
-        ws.onopen = () => ws.send("join " + msg.data[1])
+        ws.onopen = () => ws.send("join " + msg.data[2]+" "+ msg.data[1])
         me.iAmhost = false
         document.querySelectorAll("video")[1].currentTime=msg.data[0]
     }
@@ -25,7 +25,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
             else {
                 console.log('content: host dio play')
-                ws.send("control play")
+                ws.send("play")
             }
         };
 
@@ -36,7 +36,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
             else {
                 console.log('content: host dio pause')
-                ws.send("control pause")
+                ws.send("pause")
             }
         }
 
@@ -51,7 +51,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
             else {
                 console.log('content: host dio move')
-                setTimeout(()=>{ws.send("control move "+ document.querySelectorAll("video")[1].currentTime)},500)
+                setTimeout(()=>{ws.send("move "+ document.querySelectorAll("video")[1].currentTime)},500)
             }
          }
     }
@@ -104,8 +104,8 @@ function onmessage(e) {
         case "joined":
             sendMessagePop({ action: "joined" })
             break;
-        case "hostTime":
-            ws.send("hosttime "+rest[0]+document.querySelectorAll("video")[1].currentTime)
+        case "hosttime":
+            ws.send("hosttime "+rest[0]+" "+document.querySelectorAll("video")[1].currentTime)
             break
         case "move":
             hostModeMove(rest[0])

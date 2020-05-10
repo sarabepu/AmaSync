@@ -32,7 +32,8 @@ document.getElementById("start").onclick = () => {
 };
 document.getElementById("join").onclick = () => {
     sendMessage({ action: "setup" })
-    sendMessage({ action: "join", data: [startTime,document.getElementById("id-sala").textContent] })
+    let nombre=document.getElementById("nombre").value
+    sendMessage({ action: "join", data: [startTime,document.getElementById("id-sala").textContent,nombre] })
 };
 
 function sendMessage(msg, callback) {

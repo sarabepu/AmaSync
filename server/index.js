@@ -15,9 +15,12 @@ app.get('/', (req, res) => {
 })
 
 const server = https.createServer({
+  cert: fs.readFileSync("cert.pem"),
+  key: fs.readFileSync("key.pem")
+  /* 
   cert: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/fullchain.pem"),
   key: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/privkey.pem")
-}, app);
+ */}, app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
@@ -57,7 +60,7 @@ wss.on('connection', function connection(ws) {
       let roomId = userRoom.get(ws)
 
       let host=rooms[roomId].host
-      host.send("hosttime roomId")
+      host.send("hosttime " +roomId)
     }
 
     else if (command=="hosttime"){
