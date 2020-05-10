@@ -21,13 +21,13 @@ app.set("port", port);
  * Create HTTP server.
  */
 
-const server = https.createServer({
+const server = https.createServer({/* 
   cert: fs.readFileSync("cert.pem"),
-  key: fs.readFileSync("key.pem")
-  /* 
+  key: fs.readFileSync("key.pem") */
+  
   cert: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/fullchain.pem"),
   key: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/privkey.pem")
- */},
+},
   app);
 ws.setup(server);
 
