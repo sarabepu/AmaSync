@@ -1,5 +1,6 @@
 let me = { 'iAmhost': true }
 let ws
+let movie=document.querySelectorAll("video")[document.querySelectorAll("video").length - 1]
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
 
     if (msg.action == 'getUrl') {
@@ -13,11 +14,11 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         ws.onmessage = onmessage
         ws.onopen = () => ws.send("join " + msg.data[2]+" "+ msg.data[1])
         me.iAmhost = false
-        document.querySelectorAll("video")[1].currentTime=msg.data[0]
+        movie.currentTime=msg.data[0]
     }
     else if (msg.action == "setup") {
         console.log(msg)
-        document.querySelectorAll("video")[1].onplay = (e) => {
+        movie.onplay = (e) => {
             console.log('si es esa')
             if (!me.iAmhost) {
 
@@ -29,7 +30,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
         };
 
-        document.querySelectorAll("video")[1].onpause = (e) => {
+        movie.onpause = (e) => {
             console.log(2)
             if (!me.iAmhost) {
                 hostModePlay()
@@ -51,7 +52,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
             else {
                 console.log('content: host dio move')
-                setTimeout(()=>{ws.send("move "+ document.querySelectorAll("video")[1].currentTime)},500)
+                setTimeout(()=>{ws.send("move "+ movie.currentTime)},500)
             }
          }
     }
@@ -59,25 +60,25 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
 
 function hostModePlay() {
     console.log('hostmodeplay')
-    let temp = document.querySelectorAll("video")[1].onplay
-    document.querySelectorAll("video")[1].onplay = null
-    document.querySelectorAll("video")[1].play().then((res) => document.querySelectorAll("video")[1].onplay = temp)
+    let temp = movie.onplay
+    movie.onplay = null
+    movie.play().then((res) => movie.onplay = temp)
 }
 
 
 function hostModePause() {
     console.log("hostmodepause")
-    let temp = document.querySelectorAll("video")[1].onpause
-    document.querySelectorAll("video")[1].onpause = null
-    document.querySelectorAll("video")[1].pause()
-    setTimeout(()=>{document.querySelectorAll("video")[1].onpause = temp},500)
+    let temp = movie.onpause
+    movie.onpause = null
+    movie.pause()
+    setTimeout(()=>{movie.onpause = temp},500)
     console.log(1)
     
 }
 
 function hostModeMove(time) {
     console.log("actualizando tiempo "+time)
-    document.querySelectorAll("video")[1].currentTime=time
+    movie.currentTime=time
 }
 
 function onmessage(e) {
@@ -105,7 +106,7 @@ function onmessage(e) {
             sendMessagePop({ action: "joined" })
             break;
         case "hosttime":
-            ws.send("hosttime "+rest[0]+" "+document.querySelectorAll("video")[1].currentTime)
+            ws.send("hosttime "+rest[0]+" "+movie.currentTime)
             break
         case "move":
             hostModeMove(rest[0])
@@ -117,7 +118,7 @@ function createSocket(nombre) {
     console.log('creatingsocket')
     ws = new WebSocket("wss://amasync.tk:8080/")
     ws.onmessage = onmessage
-    ws.onopen = () => ws.send("create " + nombre+" "+document.querySelectorAll("video")[1].currentTime)
+    ws.onopen = () => ws.send("create " + nombre+" "+movie.currentTime)
 
 }
 function sendMessagePop(message) {
