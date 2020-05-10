@@ -1,6 +1,5 @@
 let me = { 'iAmhost': true }
 let ws
-let movie=document.querySelectorAll("video")[document.querySelectorAll("video").length - 1]
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
 
     if (msg.action == 'getUrl') {
@@ -14,11 +13,11 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         ws.onmessage = onmessage
         ws.onopen = () => ws.send("join " + msg.data[2]+" "+ msg.data[1])
         me.iAmhost = false
-        movie.currentTime=msg.data[0]
+        document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime=msg.data[0]
     }
     else if (msg.action == "setup") {
         console.log(msg)
-        movie.onplay = (e) => {
+        document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onplay = (e) => {
             console.log('si es esa')
             if (!me.iAmhost) {
 
@@ -30,7 +29,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
         };
 
-        movie.onpause = (e) => {
+        document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onpause = (e) => {
             console.log(2)
             if (!me.iAmhost) {
                 hostModePlay()
@@ -52,7 +51,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
             else {
                 console.log('content: host dio move')
-                setTimeout(()=>{ws.send("move "+ movie.currentTime)},500)
+                setTimeout(()=>{ws.send("move "+ document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime)},500)
             }
          }
     }
@@ -60,25 +59,25 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
 
 function hostModePlay() {
     console.log('hostmodeplay')
-    let temp = movie.onplay
-    movie.onplay = null
-    movie.play().then((res) => movie.onplay = temp)
+    let temp = document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onplay
+    document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onplay = null
+    document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].play().then((res) => document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onplay = temp)
 }
 
 
 function hostModePause() {
     console.log("hostmodepause")
-    let temp = movie.onpause
-    movie.onpause = null
-    movie.pause()
-    setTimeout(()=>{movie.onpause = temp},500)
+    let temp = document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onpause
+    document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onpause = null
+    document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].pause()
+    setTimeout(()=>{document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].onpause = temp},500)
     console.log(1)
     
 }
 
 function hostModeMove(time) {
     console.log("actualizando tiempo "+time)
-    movie.currentTime=time
+    document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime=time
 }
 
 function onmessage(e) {
@@ -106,7 +105,7 @@ function onmessage(e) {
             sendMessagePop({ action: "joined" })
             break;
         case "hosttime":
-            ws.send("hosttime "+rest[0]+" "+movie.currentTime)
+            ws.send("hosttime "+rest[0]+" "+document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime)
             break
         case "move":
             hostModeMove(rest[0])
@@ -118,7 +117,7 @@ function createSocket(nombre) {
     console.log('creatingsocket')
     ws = new WebSocket("wss://amasync.tk:8080/")
     ws.onmessage = onmessage
-    ws.onopen = () => ws.send("create " + nombre+" "+movie.currentTime)
+    ws.onopen = () => ws.send("create " + nombre+" "+document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime)
 
 }
 function sendMessagePop(message) {
