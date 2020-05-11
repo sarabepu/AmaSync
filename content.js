@@ -29,19 +29,35 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         };
 
         document.querySelectorAll("video")[1].onpause = (e) => {
-            console.log('pause')
+            console.log(2)
             if (!me.iAmhost) {
-                hostMode()
+                hostModePlay()
             }
             else {
                 console.log('content: host dio pause')
                 ws.send("control pause")
             }
         }
+
+         document.querySelector(`#dv-web-player > div > div:nth-child(1) > div > div > 
+         div:nth-child(2) > div > div > div.scalingUiContainerBottom > div > div.controlsOverlay > 
+         div.bottomPanel > div:nth-child(1) > div > div.progressBarContainer`).onclick=()=>{
+            console.log('mover tiempo')
+            if (!me.iAmhost) {
+                
+                ws.send("restart move")
+                
+            }
+            else {
+                console.log('content: host dio move')
+                setTimeout(()=>{ws.send("control move "+ document.querySelectorAll("video")[1].currentTime)},1000)
+            }
+         }
     }
 });
 
 function hostModePlay() {
+    console.log('hostmodeplay')
     let temp = document.querySelectorAll("video")[1].onplay
     document.querySelectorAll("video")[1].onplay = null
     document.querySelectorAll("video")[1].play().then((res) => document.querySelectorAll("video")[1].onplay = temp)
@@ -49,10 +65,18 @@ function hostModePlay() {
 
 
 function hostModePause() {
+    console.log("hostmodepause")
     let temp = document.querySelectorAll("video")[1].onpause
     document.querySelectorAll("video")[1].onpause = null
     document.querySelectorAll("video")[1].pause()
-    document.querySelectorAll("video")[1].onpause = temp
+    setTimeout(()=>{document.querySelectorAll("video")[1].onpause = temp},1000)
+    console.log(1)
+    
+}
+
+function hostModeMove(time) {
+    console.log("actualizando tiempo "+time)
+    document.querySelectorAll("video")[1].currentTime=time
 }
 
 function onmessage(e) {
@@ -74,8 +98,13 @@ function onmessage(e) {
             break;
 
         case "joined":
-            console.log("llego joined a content")
             sendMessagePop({ action: "joined" })
+            break;
+        case "hostTime":
+            ws.send("hosttime "+rest[0]+document.querySelectorAll("video")[1].currentTime)
+            break
+        case "move":
+            hostModeMove(rest[0])
     }
 }
 

@@ -25,12 +25,14 @@ wss.on('connection', function connection(ws) {
 
   ws.on('message', function incoming(message) {
     [command, ...rest] = message.split(" ")
+
     if (command == "join") {
       console.log(rest, rooms)
       userRoom.set(ws, rest[0])
       rooms[rest[0]].users.push(ws)
-      ws.send("joined 1")
+      ws.send("joined")
     }
+
     else if (command == "create") {
       let id = uuid.v4()
       userRoom.set(ws, id)
@@ -40,16 +42,33 @@ wss.on('connection', function connection(ws) {
       console.log('server: creating room')
       ws.send("created " + id)
     }
+
     else if (command == "control") {
-      console.log('server: host dio play')
       let roomId = userRoom.get(ws)
 
-      console.log(roomId)
       rooms[roomId].users.forEach(user => {
         console.log(rest[0])
-        user.send(rest[0]);
+        if(rest[1]) user.send(rest[0]+' '+ rest[1]);
+        else user.send(rest[0]);
       })
     }
+
+    else if (command == "restart") {
+      let roomId = userRoom.get(ws)
+
+      let host=rooms[roomId].host
+      host.send("hosttime roomId")
+    }
+
+    else if (command=="hosttime"){
+      let roomId = rest[0]
+      let time=rest[1]
+      rooms[roomId].users.forEach(user => {
+        console.log("mandando tiempo")
+        user.send("move"+' '+ time);
+      })
+    }
+
     else if (command == "chat") {
       rooms[roomId].users.forEach(user => {
         user.send('something');

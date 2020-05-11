@@ -7,8 +7,12 @@ chrome.runtime.onMessage.addListener(
         console.log(message)    
         switch (message.action) {
             case "link":
+                
+                document.getElementById("nuevo").style.display = "none"
+                let p=document.createElement("p");
+                p.textContent="Su sala ha sido creada. Comparta este link con sus amigos"
+                document.body.appendChild(p)
                 let input = document.createElement("input")
-
                 input.value = message.data
                 document.body.appendChild(input);
                 break;
