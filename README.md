@@ -7,7 +7,7 @@
 
 ## Description:
 
-This is AmaSync's server. AmaSync is a chrome extension for watching Amazon Prime Video remotely with your friends. 
+AmaSync is a chrome extension for watching Amazon Prime Video remotely with your friends. 
 It has the following functionalities:
 - Create rooms 
 - Join your friend's room
@@ -15,17 +15,14 @@ It has the following functionalities:
 - Chats in room
 - Cutomizable name of users
 
-
 ## Deployment
 
-You can check the extension's code [here](https://github.com/mrodriguez21/amasync). 
 
 ### Prerequisites: 
-Nodejs >= 10, npm, mongodb, bash
+Nodejs >= 10, npm, react
+
 ### Local deployment:
 - Clone this repo
-- **variables de entorno**
-- run ```npm install```
 - #### Generate SSL certificate
     
 ```bash
@@ -41,6 +38,7 @@ rm csr.pem
   ```bash
   cd amasync
   cd server
+  npm install
   npm start
   ```
 - Go to https://localhost:8080 and allow the self-signed certificate your browser. It will say it's insecure because it was generated locally, but it's ok (don't trust the browser, trust me bro 🙊).
