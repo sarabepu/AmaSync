@@ -1,6 +1,6 @@
 
 
-let amIHost = false
+let startTime = 0
 
 chrome.runtime.onMessage.addListener(
     function (message, sender, sendResponse) {
@@ -32,7 +32,7 @@ document.getElementById("start").onclick = () => {
 };
 document.getElementById("join").onclick = () => {
     sendMessage({ action: "setup" })
-    sendMessage({ action: "join", data: document.getElementById("id-sala").textContent })
+    sendMessage({ action: "join", data: [startTime,document.getElementById("id-sala").textContent] })
 };
 
 function sendMessage(msg, callback) {
@@ -48,8 +48,10 @@ chrome.tabs.getSelected(null, (tab) => {
         
         
         document.getElementById("join-div").style.display = "block"
-        document.getElementById("id-sala").textContent = params.session
         
+        document.getElementById("host-name").textContent = params.name
+        document.getElementById("id-sala").textContent = params.session
+        startTime=params.time
     }
     else {
         document.getElementById("nuevo").style.display = "block"

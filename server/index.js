@@ -40,7 +40,7 @@ wss.on('connection', function connection(ws) {
       rooms[id] = { 'host': ws, 'users': [] }
 
       console.log('server: creating room')
-      ws.send("created " + id)
+      ws.send("created " + id+" "+ rest[0]+" "+ rest[1])
     }
 
     else if (command == "control") {
