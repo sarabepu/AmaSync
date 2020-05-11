@@ -9,6 +9,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
         createSocket(msg.data)
     }
     else if (msg.action == 'join') {
+        //ws = new WebSocket("wss://localhost:8080/")
         ws = new WebSocket("wss://amasync.tk:8080/")
         ws.onmessage = onmessage
         ws.onopen = () => ws.send("join " + msg.data[2]+" "+ msg.data[1])
@@ -92,6 +93,7 @@ function onmessage(e) {
             let prefix = res.includes('?') ? '&' : '?'
             let data = res + prefix + "session=" + idSala+"&name="+nombre+"&time="+tiempo
             sendMessagePop({ action: "link", data })
+            hostModePause()
 
             break;
         case "play":
@@ -103,6 +105,7 @@ function onmessage(e) {
 
         case "joined":
             sendMessagePop({ action: "joined" })
+            hostModePause()
             break;
         case "hosttime":
             ws.send("hosttime "+rest[0]+" "+document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime)
@@ -115,6 +118,7 @@ function onmessage(e) {
 function createSocket(nombre) {
 
     console.log('creatingsocket')
+    //ws = new WebSocket("wss://localhost:8080/")
     ws = new WebSocket("wss://amasync.tk:8080/")
     ws.onmessage = onmessage
     ws.onopen = () => ws.send("create " + nombre+" "+document.querySelectorAll("video")[document.querySelectorAll("video").length - 1].currentTime)

@@ -32,7 +32,7 @@ openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
 rm csr.pem
 ```
 
-- Change the routes to the certificate on ```amasync/server/bin/www```
+- Change the routes to the certificate on ```amasync/server/bin/www``` file
 - Run the following commands
 
   ```bash
