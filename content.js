@@ -51,7 +51,7 @@ chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
             }
             else {
                 console.log('content: host dio move')
-                setTimeout(()=>{ws.send("control move "+ document.querySelectorAll("video")[1].currentTime)},1000)
+                setTimeout(()=>{ws.send("control move "+ document.querySelectorAll("video")[1].currentTime)},500)
             }
          }
     }
@@ -70,7 +70,7 @@ function hostModePause() {
     let temp = document.querySelectorAll("video")[1].onpause
     document.querySelectorAll("video")[1].onpause = null
     document.querySelectorAll("video")[1].pause()
-    setTimeout(()=>{document.querySelectorAll("video")[1].onpause = temp},1000)
+    setTimeout(()=>{document.querySelectorAll("video")[1].onpause = temp},500)
     console.log(1)
     
 }
