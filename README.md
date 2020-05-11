@@ -32,7 +32,7 @@ openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
 rm csr.pem
 ```
 
-- Change the routes to the certificate on server/bin/www
+- Change the routes to the certificate on ```amasync/server/bin/www```
 - Run the following commands
 
   ```bash
@@ -41,9 +41,9 @@ rm csr.pem
   npm install
   npm start
   ```
-- Go to https://localhost:8080 and allow the self-signed certificate your browser. It will say it's insecure because it was generated locally, but it's ok (don't trust the browser, trust me bro 🙊).
+- Go to https://localhost:8080 and allow the self-signed certificate in your browser. It will say it's insecure because it was generated locally, but it's ok (don't trust the browser, trust me bro 🙊).
 
-- Test that it's working creating a websocket in your **browser console**
+- Ypu can test that it's working creating a websocket in your **browser console**
 
         let ws= new WebSocket('wss://localhost:8080')
 
