@@ -1,4 +1,4 @@
-# AmaSync Server
+# AmaSync Server☁️👯‍♂️
 
 ## Authors:
 
