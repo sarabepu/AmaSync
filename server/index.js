@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 })
 
 const server = https.createServer({
-  cert: fs.readFileSync("certificados/chain.pem"),
-  key: fs.readFileSync("certificados/privkey.pem")
+  cert: fs.readFileSync("../cert/amasync.tk/chain.pem"),
+  key: fs.readFileSync("../cert/amasync.tk/privkey.pem")
 }, app);
 const wss = new WebSocket.Server({ server });
 
