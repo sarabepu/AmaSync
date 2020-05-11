@@ -21,7 +21,7 @@ document.getElementById("start").onclick = () => {
     sendMessage({ action: "conect", data: document.getElementById("nombre-host").value })
 };
 document.getElementById("join").onclick = () => {
-    
+    sendMessage({ action: "setup" })
     sendMessage({ action: "join", data: document.getElementById("id-sala").textContent })
 };
 
@@ -45,7 +45,7 @@ chrome.tabs.getSelected(null, (tab) => {
         document.getElementById("nuevo").style.display = "block"
     }
 })
-sendMessage({ action: "setup" })
+
 
 
 

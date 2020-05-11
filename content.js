@@ -16,7 +16,7 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
     else if (msg.action == "setup"){
         console.log(msg)
         document.querySelectorAll("video")[1].onplay = (e) => {
-            console.log(me)
+            console.log('si es esa')
             if (!me.iAmhost) {
                 document.querySelectorAll("video")[1].pause()
             }
