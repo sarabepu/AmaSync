@@ -43,13 +43,13 @@ rm csr.pem
   cd server
   npm start
   ```
-- Go to https://localhost:8080 and allow the self-signed certificate your browser. It will say it's insecure because it was generated locally, but it's ok (trust me bro, not a virus).
+- Go to https://localhost:8080 and allow the self-signed certificate your browser. It will say it's insecure because it was generated locally, but it's ok (don't trust the browser, trust me bro 🙊).
 
 - Test that it's working creating a websocket in your **browser console**
 
         let ws= new WebSocket('wss://localhost:8080')
 
-You're all set ;) 
+You're all set 😉
 
 ## License
 
