@@ -1,62 +1,61 @@
 
 let ws
 let amIHost = false
+
+chrome.runtime.onMessage.addListener(
+    function (message, sender, sendResponse) {
+        console.log(message)    
+        switch (message.action) {
+            case "link":
+                let input = document.createElement("input")
+
+                input.value = message.data
+                document.body.appendChild(input);
+                break;
+        }
+
+    }
+);
+
 document.getElementById("start").onclick = () => {
-    ws = new WebSocket("wss://localhost:8080")
+    sendMessage({ action: "conect", data: document.getElementById("nombre-host").value })
+};
+document.getElementById("join").onclick = () => {
+    
+    sendMessage({ action: "join", data: document.getElementById("id-sala").textContent })
+};
 
-    ws.onmessage = onmessage
-
-    ws.onopen = () => ws.send("create "+document.getElementById("nombre-host"))
-    amIHost = true
-} 
-
-
-function sendMessage(msg,callback){
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        chrome.tabs.sendMessage(tabs[0].id, msg, callback); 
+function sendMessage(msg, callback) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, msg, callback);
     });
 }
 
 chrome.tabs.getSelected(null, (tab) => {
     let url = tab.url
     params = getQueryParams(url)
-    if ("session" in params){
-        ws = new WebSocket("wss://localhost:8080")
-        ws.onmessage = onmessage
-        document.getElementById("start")
+    if ("session" in params) {
+        
+        
         document.getElementById("join-div").style.display = "block"
         document.getElementById("id-sala").textContent = params.session
-        ws.onopen = () => ws.send("join "+params[session])
+        
     }
-    else{
+    else {
         document.getElementById("nuevo").style.display = "block"
     }
 })
+sendMessage({ action: "setup" })
 
 
-function onmessage(e){
-        console.log(e)
-        let [action, ...rest] = e.data.split(' ')
-        console.log(rest)
-        switch (action){
-            case "created":
-                sendMessage({action: "getUrl"}, (res) => {
-                    console.log(res);
-                    let input = document.createElement("input")
-                    input.value = res+"?session="+rest[0]
-                    document.body.appendChild(input)
-                })
-                break;
-        }
-}
 
 function getQueryParams(url) {
     let queryParams = {};
-  //create an anchor tag to use the property called search
+    //create an anchor tag to use the property called search
     let anchor = document.createElement('a');
-  //assigning url to href of anchor tag
+    //assigning url to href of anchor tag
     anchor.href = url;
-  //search property returns the query string of url
+    //search property returns the query string of url
     let queryStrings = anchor.search.substring(1);
     let params = queryStrings.split('&');
 

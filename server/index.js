@@ -23,14 +23,19 @@ const wss = new WebSocket.Server({ server });
 wss.on('connection', function connection(ws) {
 
   ws.send("inicio")
+
   ws.on('message', function incoming(message) {
     [command, ...rest] = message.split(" ")
     if (command == "join"){
+        console.log(rest,rooms)
         rooms[rest[0]].users.push(ws)
+        ws.send("correcto 1")
     }
     else if (command == "create"){
         let id = uuid.v4()
+        ws.id_room=id
         rooms[id] = {'host': rest[0], 'users': [ws]}
+        console.log('server: creating room')
         ws.send("created "+id)
     }
     else if (command == "play"){
@@ -46,6 +51,18 @@ wss.on('connection', function connection(ws) {
         })
     }
   });
+
+  ws.on('close', ()=>{
+    console.log("me sali")
+    let room=rooms[ws.id_room]
+    room.users.splice( room.users.indexOf(ws))
+    if (!room.users.length)
+    {
+      delete rooms[ws.id_room].users
+    }
+    console.log(rooms)
+
+  })
 
 });
  
