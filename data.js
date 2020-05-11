@@ -1,5 +1,5 @@
 
-let ws
+
 let amIHost = false
 
 chrome.runtime.onMessage.addListener(
@@ -12,12 +12,18 @@ chrome.runtime.onMessage.addListener(
                 input.value = message.data
                 document.body.appendChild(input);
                 break;
+            case "joined":
+                document.getElementById("join-div").style.display = "none"
+                let h=document.createElement("h1")
+                h.textContent="Exito"
+                document.body.appendChild(h)
         }
 
     }
 );
 
 document.getElementById("start").onclick = () => {
+    sendMessage({ action: "setup" })
     sendMessage({ action: "conect", data: document.getElementById("nombre-host").value })
 };
 document.getElementById("join").onclick = () => {

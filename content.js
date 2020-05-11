@@ -1,56 +1,92 @@
-let me = {'iAmhost': true}
-chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+let me = { 'iAmhost': true }
+let ws
+chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {
 
     if (msg.action == 'getUrl') {
         sendResponse(window.location.href)
     }
-    else if (msg.action == 'conect'){
+    else if (msg.action == 'conect') {
         createSocket(msg.data)
     }
-    else if (msg.action=='join'){
+    else if (msg.action == 'join') {
         ws = new WebSocket("wss://localhost:8080")
         ws.onmessage = onmessage
         ws.onopen = () => ws.send("join " + msg.data)
-        me.iAmhost=false
+        me.iAmhost = false
     }
-    else if (msg.action == "setup"){
+    else if (msg.action == "setup") {
         console.log(msg)
         document.querySelectorAll("video")[1].onplay = (e) => {
             console.log('si es esa')
             if (!me.iAmhost) {
-                document.querySelectorAll("video")[1].pause()
+
+                hostModePause()
+            }
+            else {
+                console.log('content: host dio play')
+                ws.send("control play")
+            }
+        };
+
+        document.querySelectorAll("video")[1].onpause = (e) => {
+            console.log('pause')
+            if (!me.iAmhost) {
+                hostMode()
+            }
+            else {
+                console.log('content: host dio pause')
+                ws.send("control pause")
             }
         }
     }
-  });
+});
 
-  function createSocket(nombre){
-      
-    console.log('creatingsocket')
-    ws = new WebSocket("wss://localhost:8080")
-    ws.onmessage = onmessage
-    ws.onopen = () => ws.send("create "+nombre)
-    
-  }
-  function sendMessagePop(message){
-      chrome.runtime.sendMessage(message)
-  }
+function hostModePlay() {
+    let temp = document.querySelectorAll("video")[1].onplay
+    document.querySelectorAll("video")[1].onplay = null
+    document.querySelectorAll("video")[1].play().then((res) => document.querySelectorAll("video")[1].onplay = temp)
+}
 
-  function onmessage(e) {
+
+function hostModePause() {
+    let temp = document.querySelectorAll("video")[1].onpause
+    document.querySelectorAll("video")[1].onpause = null
+    document.querySelectorAll("video")[1].pause()
+    document.querySelectorAll("video")[1].onpause = temp
+}
+
+function onmessage(e) {
     console.log(e)
     let [action, ...rest] = e.data.split(' ')
-    switch (action){
+    switch (action) {
         case "created":
-                console.log('sending message to pop')
-                let res=window.location.href
-                
-                let prefix = res.includes('?') ? '&' : '?'
+            let res = window.location.href
+            let prefix = res.includes('?') ? '&' : '?'
+            let data = res + prefix + "session=" + rest[0]
+            sendMessagePop({ action: "link", data })
 
-                let data = res + prefix + "session=" + rest[0]
-
-                sendMessagePop({action:"link",data})
-                
             break;
+        case "play":
+            hostModePlay()
+            break;
+        case "pause":
+            hostModePause()
+            break;
+
+        case "joined":
+            console.log("llego joined a content")
+            sendMessagePop({ action: "joined" })
     }
 }
 
+function createSocket(nombre) {
+
+    console.log('creatingsocket')
+    ws = new WebSocket("wss://localhost:8080")
+    ws.onmessage = onmessage
+    ws.onopen = () => ws.send("create " + nombre)
+
+}
+function sendMessagePop(message) {
+    chrome.runtime.sendMessage(message)
+}
