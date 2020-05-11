@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "My Cool Extension",
+    "version": "0.1",
+    "permissions": [
+      "activeTab",
+      "declarativeContent"
+    ],"content_scripts": [
+      {
+        "matches": ["*://*.primevideo.com/detail/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "page_action": {
+      "default_icon": {
+        "19": "icon.png",
+        "38": "icon.png"
+      },
+      "default_popup": "main.html"
+    },
+    "icons": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    }
+}
