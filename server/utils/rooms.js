@@ -1,5 +1,7 @@
 const uuid = require("uuid");
 
+
+//Se entiende muy bien el codigo. 
 const Rooms = function () {
   const Rooms = {};
   const rooms = new Map();
