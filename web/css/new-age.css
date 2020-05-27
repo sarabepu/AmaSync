@@ -59,7 +59,7 @@ body {
 }
 
 a {
-  color: #0d95e8;
+  color: #0072f0;
   transition: all 0.35s;
 }
 
@@ -340,7 +340,7 @@ section.features .feature-item i {
   font-size: 80px;
   display: block;
   margin-bottom: 15px;
-  background: #f8981d;
+  background: linear-gradient(to left, #fcbd20, #f8981d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
