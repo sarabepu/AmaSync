@@ -14,8 +14,15 @@
   box-shadow: 0 19px 51px 0 rgba(0, 0, 0, 0.16),
     0 14px 19px 0 rgba(0, 0, 0, 0.07);
 }
+
 .sync-vid-1 {
   width: 120%;
+}
+@media (max-width: 992px) {
+  .sync-vid-1,
+  .sync-vid-2 {
+    display: none;
+  }
 }
 
 .sync-vid-2 {
@@ -23,11 +30,24 @@
   right: 80%;
   top: 15rem;
 }
+
 .imagen-fondo {
   position: absolute;
   border-radius: 10%;
   top: 10%;
 }
+@media (max-width: 1200px) {
+  .imagen-fondo {
+    max-width: 300px;
+    display: block;
+  }
+}
+@media (max-width: 992px) {
+  .imagen-fondo {
+    display: none;
+  }
+}
+
 html,
 body {
   width: 100%;
@@ -195,7 +215,8 @@ header.masthead {
 
 header.masthead .header-content {
   max-width: 500px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+  margin-top: 50px;
   text-align: center;
 }
 
@@ -230,6 +251,9 @@ header.masthead .device-container .screen img {
   }
   header.masthead .device-container {
     max-width: 325px;
+  }
+  .my-auto {
+    padding-right: 0;
   }
 }
 
@@ -359,11 +383,23 @@ section.cta .overlay {
 
 section.contact {
   text-align: center;
+  padding: 50px 0;
 }
 
 section.contact h2 {
   margin-top: 0;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  section.contact h2 {
+    font-size: 40px;
+  }
+}
+@media (max-width: 400px) {
+  section.contact h2 {
+    font-size: 25px;
+  }
 }
 
 section.contact h2 i {
