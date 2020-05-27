@@ -145,8 +145,8 @@ section h2 {
 }
 
 #mainNav .navbar-nav > li > a.active {
-  color: #11698a;
-  font-weight: bold;
+  color: #11698a !important;
+  font-weight: 500;
   background-color: transparent;
 }
 
