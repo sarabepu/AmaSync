@@ -39,7 +39,7 @@ body {
 }
 
 a {
-  color: #f76902;
+  color: #f8981d;
   transition: all 0.35s;
 }
 
@@ -125,7 +125,8 @@ section h2 {
 }
 
 #mainNav .navbar-nav > li > a.active {
-  color: #f76902 !important;
+  color: #11698a;
+  font-weight: bold;
   background-color: transparent;
 }
 
@@ -140,7 +141,7 @@ section h2 {
 
 #mainNav .navbar-nav > li > a:hover,
 #mainNav .navbar-nav > li > a:focus:hover {
-  color: #f8981d;
+  color: #09b1e9;
 }
 
 @media (min-width: 992px) {
@@ -172,7 +173,7 @@ section h2 {
   }
   #mainNav.navbar-shrink .navbar-brand:hover,
   #mainNav.navbar-shrink .navbar-brand:focus {
-    color: #f8981d;
+    color: #1a242e;
   }
   #mainNav.navbar-shrink .navbar-nav > li > a,
   #mainNav.navbar-shrink .navbar-nav > li > a:focus {
@@ -180,7 +181,7 @@ section h2 {
   }
   #mainNav.navbar-shrink .navbar-nav > li > a:hover,
   #mainNav.navbar-shrink .navbar-nav > li > a:focus:hover {
-    color: #f8981d;
+    color: #1a242e;
   }
 }
 
@@ -283,7 +284,7 @@ section.features .section-heading p {
 section.features .device-container,
 section.features .feature-item {
   max-width: 325px;
-  margin: 0 auto;
+  margin: 5% auto;
 }
 
 section.features .device-container {
@@ -297,22 +298,27 @@ section.features .device-container {
 }
 
 section.features .feature-item {
-  padding-top: 2%;
-  padding-bottom: 2%;
+  background-color: #3d3d3d;
+  border-radius: 25px;
+  padding: 5% 3% 2% 3%;
   text-align: center;
 }
 
 section.features .feature-item h3 {
   font-size: 30px;
+  color: white;
 }
 
 section.features .feature-item i {
   font-size: 80px;
   display: block;
   margin-bottom: 15px;
-  background: linear-gradient(to left, #09b1e9, #1a242e);
+  background: #09b1e9;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+section.features .feature-item p {
+  color: #bfc1c2 !important;
 }
 
 section.cta {
@@ -389,7 +395,7 @@ section.contact ul.list-social li.social-twitter a:hover {
 footer {
   padding: 25px 0;
   text-align: center;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
   background-color: #222222;
 }
 
