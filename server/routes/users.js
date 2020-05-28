@@ -13,8 +13,8 @@ router.post("/new", (req, res) => {
     name: req.body.user.name,
   };
   let encrypt = user.password;
-  db.findOne("users", { username: user.username }).then((user) => {
-    if (user) {
+  db.findOne("users", { username: user.username }).then((userExists) => {
+    if (userExists) {
       res.send({ error: "Email already used" });
     } else {
       bcrypt.genSalt(saltRounds, function (err, salt) {
