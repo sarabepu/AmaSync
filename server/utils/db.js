@@ -39,6 +39,7 @@ function DB() {
         .db(dbName)
         .collection(colName)
         .insertOne(record)
+        .catch((err) => err)
         .finally(() => client.close())
     );
   };
