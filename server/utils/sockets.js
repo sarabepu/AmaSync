@@ -11,7 +11,8 @@ const PROTOCOL = {
   MOVE:"move",
   RESTART:"restart",
   HOSTTIME:"hosttime",
-  SEPARATOR: " ",
+  SEPARATOR: ";",
+  EXIT:"exit"
 };
 
 class Message {
@@ -50,6 +51,9 @@ class Message {
   }
   isHostTime(){
     return this.cmd === PROTOCOL.HOSTTIME ;
+  }
+  isExit(){
+    return this.cmd === PROTOCOL.EXIT ;
   }
 }
 
@@ -100,7 +104,12 @@ const Sockets = function () {
             user.socket.send(PROTOCOL.MOVE+PROTOCOL.SEPARATOR+time)
           })
         }
+        else if (message.isExit()){
+          let roomID =  message.args[0]
+          rooms.exit(roomID,ws);
 
+
+        }
       });
     });
     wss.on("close", () => {
