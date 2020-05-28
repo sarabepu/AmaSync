@@ -17,10 +17,18 @@ const Rooms = function () {
     users.set(ws, id);
     return id;
   };
+  Rooms.exit=(roomID,ws)=>{
+    let room=rooms.get(roomID)
+    let index = room.users.indexOf(ws);
+    if (index > -1) {
+     room.users= users.splice(index, 1);
+    }
+    ws.close()
 
+  }
   Rooms.getUsers = (roomID) => {
     console.log(rooms.get(roomID)+ "getusers");
-    return rooms.get(roomID).users;
+    return rooms.get(roomID)?rooms.get(roomID).users:[];
   };
 
   Rooms.getRoomID = (ws) => {
