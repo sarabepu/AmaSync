@@ -28,6 +28,7 @@ function DB() {
         .db(dbName)
         .collection(colName)
         .findOne(query)
+        .catch((err) => err)
         .finally(() => client.close())
     );
   };
