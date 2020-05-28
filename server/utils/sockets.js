@@ -106,6 +106,7 @@ const Sockets = function () {
         }
         else if (message.isExit()){
           let roomID =  message.args[0]
+          console.log("exit");
           rooms.exit(roomID,ws);
 
 

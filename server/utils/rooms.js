@@ -18,6 +18,7 @@ const Rooms = function () {
     return id;
   };
   Rooms.exit=(roomID,ws)=>{
+    console.log("exit",roomID)
     let room=rooms.get(roomID)
     let index = room.users.indexOf(ws);
     if (index > -1) {
