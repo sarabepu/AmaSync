@@ -4,13 +4,9 @@
  * Module dependencies.
  */
 
-const cors = require('cors');
-
-
 // Then use it before your routes are set up:
 
 const app = require("../app");
-app.use(cors());
 const debug = require("debug")("amasync-server:server");
 const http = require("http");
 const https = require("https");
