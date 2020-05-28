@@ -6,8 +6,8 @@ const db = require("./db");
 const bcrypt = require("bcryptjs");
 
 passport.use(
-  new Strategy(function (email, password, cb) {
-    db.findOne("users", { email: email }).then((user) => {
+  new Strategy(function (username, password, cb) {
+    db.findOne("users", { username: username }).then((user) => {
       if (user) {
         bcrypt.compare(password, user.password).then(function (result) {
           // result == true
@@ -28,11 +28,11 @@ passport.use(
 );
 
 passport.serializeUser(function (user, done) {
-  done(null, user.email);
+  done(null, user.username);
 });
 
-passport.deserializeUser(function (email, done) {
-  db.findOne("users", { email: email }).then((user) => {
+passport.deserializeUser(function (username, done) {
+  db.findOne("users", { username: username }).then((user) => {
     if (user) {
       done(null, user);
     } else {

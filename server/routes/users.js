@@ -8,12 +8,12 @@ const saltRounds = 10;
 // Register a new user
 router.post("/new", (req, res) => {
   let user = {
-    email: req.body.user.email,
+    username: req.body.user.username,
     password: req.body.user.password,
     name: req.body.user.name,
   };
   let encrypt = user.password;
-  db.findOne("users", { email: user.email }).then((user) => {
+  db.findOne("users", { username: user.username }).then((user) => {
     if (user) {
       res.send({ error: "Email already used" });
     } else {
