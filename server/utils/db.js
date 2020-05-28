@@ -17,7 +17,14 @@ function DB() {
         .find(query)
         .sort({ timestamp: -1 })
         .toArray()
-        .finally(() => client.close())
+        .catch((err) => {
+          client.close();
+          throw err;
+        })
+        .then((res) => {
+          client.close();
+          return res;
+        })
     );
   };
 
@@ -64,7 +71,14 @@ function DB() {
         .db(dbName)
         .collection(colName)
         .updateOne(query, update)
-        .finally(() => client.close())
+        .catch((err) => {
+          client.close();
+          throw err;
+        })
+        .then((res) => {
+          client.close();
+          return res;
+        })
     );
   };
 
@@ -75,7 +89,14 @@ function DB() {
         .db(dbName)
         .collection(colName)
         .deleteOne(query)
-        .finally(() => client.close())
+        .catch((err) => {
+          client.close();
+          throw err;
+        })
+        .then((res) => {
+          client.close();
+          return res;
+        })
     );
   };
 
