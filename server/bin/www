@@ -6,9 +6,10 @@
 
 const app = require("../app");
 const debug = require("debug")("amasync-server:server");
+const http = require("http");
 const https = require("https");
 const ws = require("../utils/sockets");
-const fs = require('fs');
+const fs = require("fs");
 
 /**
  * Get port from environment and store in Express.
@@ -18,17 +19,19 @@ const port = normalizePort("8080");
 app.set("port", port);
 
 /**
- * Create HTTP server.
+ * Create HTTPS server.
  */
+const server = https.createServer(
+  {
+    cert: fs.readFileSync("cert.pem"),
+    key: fs.readFileSync("key.pem"),
 
-const server = https.createServer({/* 
-  cert: fs.readFileSync("cert.pem"),
-  key: fs.readFileSync("key.pem")
-   */
-  cert: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/fullchain.pem"),
-  key: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/privkey.pem")
-},
-  app);
+    /*cert: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/fullchain.pem"),
+    key: fs.readFileSync("/etc/letsencrypt/live/amasync.tk/privkey.pem"),
+  */
+  },
+  app
+);
 ws.setup(server);
 
 /**
@@ -38,6 +41,16 @@ ws.setup(server);
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+/** HTTP redirection */
+http
+  .createServer(function (req, res) {
+    res.writeHead(301, {
+      Location: "https://" + req.headers["host"] + req.url,
+    });
+    res.end();
+  })
+  .listen(3000);
 
 /**
  * Normalize a port into a number, string, or false.
