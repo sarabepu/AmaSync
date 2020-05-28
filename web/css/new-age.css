@@ -4,11 +4,9 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-new-age/blob/master/LICENSE)
  */
 .videos-sync {
-  top: -20%;
+  top: 0;
 }
 .sync-vid {
-  position: absolute;
-  border-radius: 20%;
   overflow: hidden;
   -webkit-transform: translateZ(0);
   box-shadow: 0 19px 51px 0 rgba(0, 0, 0, 0.16),
@@ -17,19 +15,22 @@
 
 .sync-vid-1 {
   max-width: 38vw;
+  border-radius: 4vw;
+  position: relative;
   display: block;
 }
+.sync-vid-2 {
+  width: 50%;
+  border-radius: 25px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
 @media (max-width: 992px) {
   .sync-vid-1,
   .sync-vid-2 {
     display: none;
   }
-}
-
-.sync-vid-2 {
-  width: 50%;
-  right: 80%;
-  top: 15rem;
 }
 
 .imagen-fondo {
