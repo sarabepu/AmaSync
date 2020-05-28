@@ -104,12 +104,12 @@ const Sockets = function () {
             user.socket.send(PROTOCOL.MOVE+PROTOCOL.SEPARATOR+time)
           })
         }
-        /* else if (message.isExit()){
+        else if (message.isExit()){
           let roomID =  message.args[0]
           rooms.exit(roomID,ws);
 
 
-        } */
+        }
       });
     });
     wss.on("close", () => {
