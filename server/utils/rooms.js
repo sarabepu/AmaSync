@@ -28,7 +28,7 @@ const Rooms = function () {
   }
   Rooms.getUsers = (roomID) => {
     console.log(rooms.get(roomID)+ "getusers");
-    return rooms.get(roomID).users;
+    return rooms.get(roomID)?rooms.get(roomID).users:[];
   };
 
   Rooms.getRoomID = (ws) => {
