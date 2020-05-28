@@ -28,8 +28,14 @@ function DB() {
         .db(dbName)
         .collection(colName)
         .findOne(query)
-        .catch((err) => err)
-        .finally(() => client.close())
+        .catch((err) => {
+          client.close();
+          throw err;
+        })
+        .then((res) => {
+          client.close();
+          return res;
+        })
     );
   };
 
@@ -40,8 +46,14 @@ function DB() {
         .db(dbName)
         .collection(colName)
         .insertOne(record)
-        .catch((err) => err)
-        .finally(() => client.close())
+        .catch((err) => {
+          client.close();
+          throw err;
+        })
+        .then((res) => {
+          client.close();
+          return res;
+        })
     );
   };
 
