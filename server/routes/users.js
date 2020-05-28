@@ -7,17 +7,26 @@ const saltRounds = 10;
 
 // Register a new user
 router.post("/new", (req, res) => {
-  console.log("server: users new")
-  let user = req.body.user;
+  let user = {
+    email: req.body.user.email,
+    password: req.body.user.password,
+    name: req.body.user.name,
+  };
   let encrypt = user.password;
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    bcrypt.hash(encrypt, salt, function (err, hash) {
-      // Store hash in your password DB.
-      user.password = hash;
-      db.createOne("users", user).then((user) => {
-        res.send(user);
+  db.findOne("users", { email: user.email }).then((user) => {
+    if (user) {
+      res.send({ error: "Email already used" });
+    } else {
+      bcrypt.genSalt(saltRounds, function (err, salt) {
+        bcrypt.hash(encrypt, salt, function (err, hash) {
+          // Store hash in your password DB.
+          user.password = hash;
+          db.createOne("users", user).then((user) => {
+            res.send(user);
+          });
+        });
       });
-    });
+    }
   });
 });
 
