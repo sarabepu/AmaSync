@@ -43,6 +43,7 @@ passport.deserializeUser(function (username, done) {
 });
 
 const configurePassport = (app) => {
+  console.log(process.env.SECRET_KEY);
   app.use(
     session({
       secret: process.env.SECRET_KEY,

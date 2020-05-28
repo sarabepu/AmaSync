@@ -69,7 +69,7 @@ const Sockets = function () {
          else if (message.isCreateRequest()) {
           const id = rooms.create(message.getUser(), ws);
           ws.send(PROTOCOL.CREATED + PROTOCOL.SEPARATOR + id
-            + PROTOCOL.SEPARATOR+message.args[0]+ PROTOCOL.SEPARATOR+message.args[1]);
+            + PROTOCOL.SEPARATOR+message.args[0]);
         } 
         else if (message.isControlRequest()) {
           let roomID = rooms.getRoomID(ws);

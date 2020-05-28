@@ -7,6 +7,7 @@ const saltRounds = 10;
 
 // Register a new user
 router.post("/new", (req, res) => {
+  console.log("server: users new")
   let user = req.body.user;
   let encrypt = user.password;
   bcrypt.genSalt(saltRounds, function (err, salt) {
