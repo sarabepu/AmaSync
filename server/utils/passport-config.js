@@ -3,7 +3,7 @@ const session = require("express-session");
 const Strategy = require("passport-local").Strategy;
 const db = require("./db");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 passport.use(
   new Strategy(function (username, password, cb) {
