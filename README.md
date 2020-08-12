@@ -13,7 +13,6 @@ It has the following functionalities:
 - Create rooms
 - Join your friend's room
 - Real time synchronization of movies/series
-- Chats in room
 - Cutomizable name of users
 
 ## Deployment
