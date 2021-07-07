@@ -57,6 +57,10 @@ class Message {
   }
 }
 
+
+//Me parece que la clase esta muy limpia, y me gusta mucho como estan los nombre de las variables, y el arreglo de PROTOCOL. 
+//Todo esto hace que sea muy legible el codigo. Lo unico, es tener cuidado con "ws.on("message", (msg) => { " se esta volviendo una funcion muy grande. 
+// Podrian crear funciones que remplazen lo que se hace dentro de los if, y elseif. 
 const Sockets = function () {
   const sockets = this || {};
   sockets.setup = (server) => {
